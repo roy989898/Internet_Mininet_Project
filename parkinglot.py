@@ -46,7 +46,7 @@ parser.add_argument('--lo',
 
 parser.add_argument('--dir', '-d',
                     help="Directory to store outputs",
-                    default="results")
+                    default="results_pom")
 
 parser.add_argument('-n',
                     type=int,
