@@ -93,9 +93,9 @@ class CreateTopo(Topo):
 		#ref self.addLink(receiver, switch, bw=args.bw, delay=str(args.de/2)+'ms', loss=args.lo/2, max_queue_size=200)
         hconfig = {'cpu': cpu}
         lconfig_h1_s1 = {'bw': bw, 'delay': str(args.de)+'ms','max_queue_size': max_queue_size, 'loss': args.lo }
-		lconfig_h2_s1 = {'bw': bw, 'delay': delay,'max_queue_size': max_queue_size }
-		lconfig_h3_s2 = {'bw': bw, 'delay': delay,'max_queue_size': max_queue_size }   
-		lconfig_s1_s2 = {'bw': bw, 'delay': delay,'max_queue_size': max_queue_size }
+		lconfig_h2_s1 = {'bw': bw, 'delay': str(args.de)+'ms','max_queue_size': max_queue_size, 'loss': args.lo }
+		lconfig_h3_s2 = {'bw': bw, 'delay': str(args.de)+'ms','max_queue_size': max_queue_size, 'loss': args.lo } 
+		lconfig_s1_s2 = {'bw': bw, 'delay': str(args.de)+'ms','max_queue_size': max_queue_size, 'loss': args.lo }
 		#######Start change from here
         # Create the actual topology
 		#m_add 3 host ,h1 h2 h3
