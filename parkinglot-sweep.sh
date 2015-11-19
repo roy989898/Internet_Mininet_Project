@@ -50,6 +50,7 @@ dir=$rootdir/exp1
     python parkinglot.py --bw $bw \
         --dir $dir \
         -t 30 \
+		--de 1 \
       
     python util/plot_rate.py --rx \
         --maxy $bw \
