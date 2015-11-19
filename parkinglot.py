@@ -188,7 +188,7 @@ def run_parkinglot_expt(net, n):
     start_tcpprobe()
 
     # Get receiver and clients
-    recvr = net.getNodeByName('receiver')
+    recvr = net.getNodeByName('h2')
     sender1 = net.getNodeByName('h1')
 
     # Start the receiver
@@ -206,17 +206,17 @@ def run_parkinglot_expt(net, n):
 
     sender1.sendCmd('iperf -c %s -p %s -t %d -i 1 -yc > %s/iperf_h1.txt' % (recvr.IP(), 5001, seconds, args.dir))        
 
-    for i in range(1,n):
-        sender = net.getNodeByName('h%s' % (i+1))
-        sender.sendCmd('iperf -c %s -p %s -t %d -i 1 -yc > %s/iperf_h%s.txt' % (recvr.IP(), 5001, seconds, args.dir, (i+1)))
+    #for i in range(1,n):
+    #    sender = net.getNodeByName('h%s' % (i+1))
+    #    sender.sendCmd('iperf -c %s -p %s -t %d -i 1 -yc > %s/iperf_h%s.txt' % (recvr.IP(), 5001, seconds, args.dir, (i+1)))
 
   
 
     sender1.waitOutput()
 
-    for i in range(1,n):
-        sender = net.getNodeByName('h%s' % (i+1))
-        sender.waitOutput()
+    #for i in range(1,n):
+    #    sender = net.getNodeByName('h%s' % (i+1))
+    #    sender.waitOutput()
 
     progress(seconds)
 
