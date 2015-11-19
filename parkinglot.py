@@ -15,12 +15,6 @@ from multiprocessing import Process
 from subprocess import Popen
 import termcolor as T
 import argparse
-<<<<<<< HEAD
-||||||| cec34aa... try2
-#trytrytryt
-=======
-
->>>>>>> parent of cec34aa... try2
 import sys
 import os
 from util.monitor import monitor_devs_ng
