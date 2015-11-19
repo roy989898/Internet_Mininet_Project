@@ -83,19 +83,24 @@ class ParkingLotTopo(Topo):
         hconfig = {'cpu': cpu}
         lconfig = {'bw': bw, 'delay': delay,
                    'max_queue_size': max_queue_size }
-
+		#######Start change from here
         # Create the actual topology
-        receiver = self.addHost('receiver')
+		#m_add 3 host ,h1 h2 h3
+        h1 = self.addHost('h1',**hconfig)
+		h2 = self.addHost('h2',**hconfig)
+		h3 = self.addHost('h3',**hconfig)
 
         # Switch ports 1:uplink 2:hostlink 3:downlink
-        uplink, hostlink, downlink = 1, 2, 3
+        #uplink, hostlink, downlink = 1, 2, 3
 
         # The following template code creates a parking lot topology
         # for N = 1
         # TODO: Replace the template code to create a parking lot topology for any arbitrary N (>= 1)
         # Begin: Template code
+		#m_add two switch
         s1 = self.addSwitch('s1')
-        h1 = self.addHost('h1', **hconfig)
+		s2 = self.addSwitch('s2')
+        
 
         # Wire up receiver
         self.addLink(receiver, s1,
