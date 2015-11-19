@@ -79,9 +79,16 @@ class ParkingLotTopo(Topo):
         # Initialize topo
         Topo.__init__(self, **params)
 
-        # Host and link configuration
+        # m_Host and link configuration
         hconfig = {'cpu': cpu}
-        lconfig = {'bw': bw, 'delay': delay,
+        lconfig_h1_s1 = {'bw': bw, 'delay': delay,
+                   'max_queue_size': max_queue_size }
+		lconfig_h2_s1 = {'bw': bw, 'delay': delay,
+                   'max_queue_size': max_queue_size }
+		lconfig_h3_s2 = {'bw': bw, 'delay': delay,
+                   'max_queue_size': max_queue_size }
+				   
+		lconfig_s1_s2 = {'bw': bw, 'delay': delay,
                    'max_queue_size': max_queue_size }
 		#######Start change from here
         # Create the actual topology
@@ -91,7 +98,7 @@ class ParkingLotTopo(Topo):
 		h3 = self.addHost('h3',**hconfig)
 
         # Switch ports 1:uplink 2:hostlink 3:downlink
-        #uplink, hostlink, downlink = 1, 2, 3
+        uplink, hostlink, downlink = 1, 2, 3
 
         # The following template code creates a parking lot topology
         # for N = 1
@@ -103,19 +110,28 @@ class ParkingLotTopo(Topo):
         
 
         # Wire up receiver
-        self.addLink(receiver, s1,
-                      port1=0, port2=uplink, **lconfig)
+        #self.addLink(receiver, s1,
+        #              port1=0, port2=uplink, **lconfig)
 
-        # Wire up clients:
+        # m_Wire up Host:
         self.addLink(h1, s1,
-                      port1=0, port2=hostlink, **lconfig)
+                      port1=0, port2=2, **lconfig_h1_s1)
+		self.addLink(h2, s1,
+                      port1=0, port2=3, **lconfig_h2_s1)
+		self.addLink(h3, s2,
+                      port1=0, port2=2, **lconfig_h3_s2)
+					  
+		# m_Wire up Switch:
+		
+		self.addLink(s1, s2,
+                      port1=4, port2=4, **lconfig_s1_s2)
 
-        for i in range(1,n):
-            switch = self.addSwitch('s%s' % (i+1))
-            host = self.addHost('h%s' % (i+1), **hconfig)
-            self.addLink(s1, switch, port1=downlink, port2=uplink, **lconfig)
-            self.addLink(host, switch, port1=0, port2=hostlink, **lconfig)
-            s1 = switch
+        #for i in range(1,n):
+        #    switch = self.addSwitch('s%s' % (i+1))
+        #   host = self.addHost('h%s' % (i+1), **hconfig)
+        #    self.addLink(s1, switch, port1=downlink, port2=uplink, **lconfig)
+        #    self.addLink(host, switch, port1=0, port2=hostlink, **lconfig)
+        #    s1 = switch
 
 
         # Uncomment the next 8 lines to create a N = 3 parking lot topology
