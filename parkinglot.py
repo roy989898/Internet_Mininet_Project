@@ -33,6 +33,16 @@ parser.add_argument('--bw', '-b',
                     type=float,
                     help="Bandwidth of network links",
                     required=True)
+					
+parser.add_argument('--de',
+                    type=float,
+                    help="The delay value of link",
+                    default=0)
+
+parser.add_argument('--lo',
+                    type=float,
+                    help="The loss rate of link",
+                    default=0)					
 
 parser.add_argument('--dir', '-d',
                     help="Directory to store outputs",
@@ -63,7 +73,7 @@ if not os.path.exists(args.dir):
 lg.setLogLevel('info')
 
 # Topology to be instantiated in Mininet
-class ParkingLotTopo(Topo):
+class CreateTopo(Topo):
 #Topology change at here
     "Parking Lot Topology"
 
@@ -80,9 +90,10 @@ class ParkingLotTopo(Topo):
         Topo.__init__(self, **params)
 
         # m_Host and link configuration
+		#ref self.addLink(receiver, switch, bw=args.bw, delay=str(args.de/2)+'ms', loss=args.lo/2, max_queue_size=200)
         hconfig = {'cpu': cpu}
-        lconfig_h1_s1 = {'bw': bw, 'delay': delay,
-                   'max_queue_size': max_queue_size }
+        lconfig_h1_s1 = {'bw': bw, 'delay': str(args.de/2)+'ms',
+                   'max_queue_size': max_queue_size, 'loss': args.lo }
 		lconfig_h2_s1 = {'bw': bw, 'delay': delay,
                    'max_queue_size': max_queue_size }
 		lconfig_h3_s2 = {'bw': bw, 'delay': delay,
@@ -239,12 +250,11 @@ def main():
     "Create and run experiment"
     start = time()
 
-    topo = ParkingLotTopo(n=args.n)
+    topo = CreateTopo(n=args.n)
 
     host = custom(CPULimitedHost, cpu=.15)  # 15% of system bandwidth
-    link = custom(TCLink, bw=args.bw, delay='1ms',
-                  max_queue_size=200)
-
+    #link = custom(TCLink, bw=args.bw, delay='1ms',max_queue_size=200)
+    link = custom(TCLink, bw=args.bw,max_queue_size=200)              
     net = Mininet(topo=topo, host=host, link=link)
 
     net.start()
