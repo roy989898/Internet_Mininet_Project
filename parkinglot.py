@@ -52,7 +52,7 @@ parser.add_argument('-n',
                     type=int,
                     help=("Number of senders in the parking lot topo."
                     "Must be >= 1"),
-                    required=True)
+                    )
 
 parser.add_argument('--cli', '-c',
                     action='store_true',
@@ -92,15 +92,10 @@ class CreateTopo(Topo):
         # m_Host and link configuration
 		#ref self.addLink(receiver, switch, bw=args.bw, delay=str(args.de/2)+'ms', loss=args.lo/2, max_queue_size=200)
         hconfig = {'cpu': cpu}
-        lconfig_h1_s1 = {'bw': bw, 'delay': str(args.de/2)+'ms',
-                   'max_queue_size': max_queue_size, 'loss': args.lo }
-		lconfig_h2_s1 = {'bw': bw, 'delay': delay,
-                   'max_queue_size': max_queue_size }
-		lconfig_h3_s2 = {'bw': bw, 'delay': delay,
-                   'max_queue_size': max_queue_size }
-				   
-		lconfig_s1_s2 = {'bw': bw, 'delay': delay,
-                   'max_queue_size': max_queue_size }
+        lconfig_h1_s1 = {'bw': bw, 'delay': str(args.de)+'ms','max_queue_size': max_queue_size, 'loss': args.lo }
+		lconfig_h2_s1 = {'bw': bw, 'delay': delay,'max_queue_size': max_queue_size }
+		lconfig_h3_s2 = {'bw': bw, 'delay': delay,'max_queue_size': max_queue_size }   
+		lconfig_s1_s2 = {'bw': bw, 'delay': delay,'max_queue_size': max_queue_size }
 		#######Start change from here
         # Create the actual topology
 		#m_add 3 host ,h1 h2 h3
@@ -125,17 +120,13 @@ class CreateTopo(Topo):
         #              port1=0, port2=uplink, **lconfig)
 
         # m_Wire up Host:
-        self.addLink(h1, s1,
-                      port1=0, port2=2, **lconfig_h1_s1)
-		self.addLink(h2, s1,
-                      port1=0, port2=3, **lconfig_h2_s1)
-		self.addLink(h3, s2,
-                      port1=0, port2=2, **lconfig_h3_s2)
+        self.addLink(h1, s1,port1=0, port2=2, **lconfig_h1_s1)
+		self.addLink(h2, s1,port1=0, port2=3, **lconfig_h2_s1)
+		self.addLink(h3, s2,port1=0, port2=2, **lconfig_h3_s2)
 					  
 		# m_Wire up Switch:
 		
-		self.addLink(s1, s2,
-                      port1=4, port2=4, **lconfig_s1_s2)
+		self.addLink(s1, s2,port1=4, port2=4, **lconfig_s1_s2)
 
         #for i in range(1,n):
         #    switch = self.addSwitch('s%s' % (i+1))
