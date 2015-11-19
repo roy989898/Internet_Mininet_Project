@@ -45,18 +45,27 @@ bw=10
 #        -o $dir/cwnd.png
 #done
 
-dir=$rootdir/n$n
+#sudo python parkinglot.py --bw 10 --dir test -t 60 
+dir=$rootdir/de0lo0
     python parkinglot.py --bw $bw \
         --dir $dir \
         -t 30 \
-        -n $n
+      
     python util/plot_rate.py --rx \
         --maxy $bw \
         --xlabel 'Time (s)' \
         --ylabel 'Rate (Mbps)' \
         -i 's1-eth2' \
         -f $dir/bwm.txt \
-        -o $dir/rate.png
+        -o $dir/rate_eth2.png
+		
+	python util/plot_rate.py --rx \
+        --maxy $bw \
+        --xlabel 'Time (s)' \
+        --ylabel 'Rate (Mbps)' \
+        -i 's1-eth3' \
+        -f $dir/bwm.txt \
+        -o $dir/rate_eth3.png
  
 
 echo "Started at" $start
