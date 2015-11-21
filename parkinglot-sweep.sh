@@ -101,8 +101,58 @@ done
 	
 #exp1 vary loss rate
 
-#exp2 change link s1-s2 vary loss rate
+#exp2 change link s1-s2 vary delay
+for i in {0..300..30}
+do
+    d_delay=$i
+    echo $d_delay
+    dir=$rootdir/exp2/vary_delay/$d_delay
+    python exp2.py --bw $bw \
+        --dir $dir \
+        -t 60 \
+	--de $d_delay \
+      
+    python util/plot_rate.py --rx \
+        --maxy $bw \
+        --xlabel 'Time (s)' \
+        --ylabel 'Rate (Mbps)' \
+        -i 's[1]-eth[2]' \
+        -f $dir/bwm.txt \
+        -o $dir/rate_eth2.png
+   
+		
+    python util/plot_tcpprobe.py \
+        -f $dir/tcp_probe.txt \
+        -o $dir/cwnd.png
 
+done	 
+#exp2 vary delay
+
+#exp2 vary loss rate	
+for i in {0..8..2}
+do
+    loss_rate=$i
+    echo $loss_rate
+    dir=$rootdir/exp2/vary_lossrate/$loss_rate
+    python exp2.py --bw $bw \
+        --dir $dir \
+        -t 60 \
+		--lo $loss_rate \
+      
+    python util/plot_rate.py --rx \
+        --maxy $bw \
+        --xlabel 'Time (s)' \
+        --ylabel 'Rate (Mbps)' \
+        -i 's[1]-eth[2]' \
+        -f $dir/bwm.txt \
+        -o $dir/rate_eth2.png
+   
+		
+    python util/plot_tcpprobe.py \
+        -f $dir/tcp_probe.txt \
+        -o $dir/cwnd.png
+done	
+	
 #exp2 vary loss rate
 echo "Started at" $start
 echo "Ended at" `date`
