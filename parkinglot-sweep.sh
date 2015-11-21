@@ -52,7 +52,7 @@ do
     d_delay=$i
     echo $d_delay
     dir=$rootdir/exp1/vary_delay/$d_delay
-    python parkinglot.py --bw $bw \
+    python exp1.py --bw $bw \
         --dir $dir \
         -t 60 \
 	--de $d_delay \
