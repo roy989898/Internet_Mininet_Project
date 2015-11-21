@@ -49,11 +49,7 @@ parser.add_argument('--dir', '-d',
                     help="Directory to store outputs",
                     default="results_pom")
 
-parser.add_argument('-n',
-                    type=int,
-                    help=("Number of senders in the parking lot topo."
-                          "Must be >= 1"),
-                    )
+
 
 parser.add_argument('--cli', '-c',
                     action='store_true',
@@ -100,7 +96,7 @@ class CreateTopo(Topo):
         lconfig_s1_s2 = {'bw': bw, 'delay': str(args.de) + 'ms', 'max_queue_size': max_queue_size, 'loss': args.lo}
 
         #######Start change from here
-        # Create the actual topology
+
         # m_add 3 host ,h1 h2 h3
         h1 = self.addHost('h1', **hconfig)
         h2 = self.addHost('h2', **hconfig)
@@ -109,17 +105,12 @@ class CreateTopo(Topo):
         # Switch ports 1:uplink 2:hostlink 3:downlink
         uplink, hostlink, downlink = 1, 2, 3
 
-        # The following template code creates a parking lot topology
-        # for N = 1
-        # TODO: Replace the template code to create a parking lot topology for any arbitrary N (>= 1)
-        # Begin: Template code
+
         # m_add two switch
         s1 = self.addSwitch('s1')
         s2 = self.addSwitch('s2')
 
-        # Wire up receiver
-        # self.addLink(receiver, s1,
-        #              port1=0, port2=uplink, **lconfig)
+ 
 
         # m_Wire up Host:
         self.addLink(h1, s1, port1=0, port2=2, **lconfig_h1_s1)
@@ -130,29 +121,7 @@ class CreateTopo(Topo):
 
         self.addLink(s1, s2, port1=4, port2=4, **lconfig_s1_s2)
 
-        # for i in range(1,n):
-        #    switch = self.addSwitch('s%s' % (i+1))
-        #   host = self.addHost('h%s' % (i+1), **hconfig)
-        #    self.addLink(s1, switch, port1=downlink, port2=uplink, **lconfig)
-        #    self.addLink(host, switch, port1=0, port2=hostlink, **lconfig)
-        #    s1 = switch
 
-
-        # Uncomment the next 8 lines to create a N = 3 parking lot topology
-        # s2 = self.addSwitch('s2')
-        # h2 = self.addHost('h2', **hconfig)
-        # self.addLink(s1, s2,
-        #              port1=downlink, port2=uplink, **lconfig)
-        # self.addLink(h2, s2,
-        #              port1=0, port2=hostlink, **lconfig)
-        # s3 = self.addSwitch('s3')
-        # h3 = self.addHost('h3', **hconfig)
-        # self.addLink(s2, s3,
-        #              port1=downlink, port2=uplink, **lconfig)
-        # self.addLink(h3, s3,
-        #              port1=0, port2=hostlink, **lconfig)
-
-        # End: Template code
 
 
 def waitListening(client, server, port):
@@ -215,17 +184,8 @@ def run_parkinglot_expt(net, n):
 
     sender1.sendCmd('iperf -c %s -p %s -t %d -i 1 -yc > %s/iperf_h1.txt' % (recvr.IP(), 5001, seconds, args.dir))
 
-    # for i in range(1,n):
-    #    sender = net.getNodeByName('h%s' % (i+1))
-    #    sender.sendCmd('iperf -c %s -p %s -t %d -i 1 -yc > %s/iperf_h%s.txt' % (recvr.IP(), 5001, seconds, args.dir, (i+1)))
-
-
 
     sender1.waitOutput()
-
-    # for i in range(1,n):
-    #    sender = net.getNodeByName('h%s' % (i+1))
-    #    sender.waitOutput()
 
     progress(seconds)
 
