@@ -94,10 +94,10 @@ class CreateTopo(Topo):
         # m_Host and link configuration
         # ref self.addLink(receiver, switch, bw=args.bw, delay=str(args.de/2)+'ms', loss=args.lo/2, max_queue_size=200)
         hconfig = {'cpu': cpu}
-        lconfig_h1_s1 = {'bw': bw, 'delay': str(args.de) + 'ms', 'max_queue_size': max_queue_size, 'loss': args.lo}
+        lconfig_h1_s1 = {'bw': bw, 'delay': str(1) + 'ms', 'max_queue_size': max_queue_size, 'loss': 0}
         lconfig_h2_s1 = {'bw': bw, 'delay': str(1) + 'ms', 'max_queue_size': max_queue_size, 'loss': 0}
         lconfig_h3_s2 = {'bw': bw, 'delay': str(1) + 'ms', 'max_queue_size': max_queue_size, 'loss': 0}
-        lconfig_s1_s2 = {'bw': bw, 'delay': str(1) + 'ms', 'max_queue_size': max_queue_size, 'loss': 0}
+        lconfig_s1_s2 = {'bw': bw, 'delay': str(args.de) + 'ms', 'max_queue_size': max_queue_size, 'loss': args.lo}
 
         #######Start change from here
         # Create the actual topology
@@ -197,7 +197,7 @@ def run_parkinglot_expt(net, n):
     start_tcpprobe()
 
     # Get receiver and clients
-    recvr = net.getNodeByName('h2')
+    recvr = net.getNodeByName('h3')
     sender1 = net.getNodeByName('h1')
 
     # Start the receiver
