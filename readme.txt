@@ -44,23 +44,37 @@ h1 send to h2
 
 h1-s1 vary
 
-s1-h2 1ms delay 0%loss reate
-s1-s2 1ms delay 0%loss reate
-s2-h3 1ms delay 0%loss reate
+s1-h2 0ms delay 0%loss reate
+s1-s2 0ms delay 0%loss reate
+s2-h3 0ms delay 0%loss reate
 
 vary delay 0-300 step=30ms
 
-vary loss rate 0-8 step=2
+vary loss rate 0-8 step=2%
 
 EXP2~~~~~~~~~~
 h1 send to h3
 
-s1-s22 vary
+s1-s2 vary
 
-s1-h2 1ms delay 0%loss reate
-h1-s1 1ms delay 0%loss reate
-s2-h3 1ms delay 0%loss reate
+s1-h2 0ms delay 0%loss reate
+h1-s1 0ms delay 0%loss reate
+s2-h3 0ms delay 0%loss reate
 
 vary delay 0-300 step=30ms
 
-vary loss rate 0-8 step=2
+vary loss rate 0-8 step=2%
+
+EXP3~~~~~~~~~~
+
+h1 send to h3
+
+h1-s1 vary
+
+s1-h2 0ms delay 0%loss reate
+s1-s2 0ms delay 0%loss reate
+s2-h3 0ms delay 0%loss reate
+
+vary delay 0-300 step=30ms
+
+vary loss rate 0-8 step=2%
