@@ -42,7 +42,7 @@ EXP1~~~~~~~~~~
 
 h1 send to h2
 
-h1-h2 vary
+h1-s1 vary
 
 s1-h2 1ms delay 0%loss reate
 s1-s2 1ms delay 0%loss reate
