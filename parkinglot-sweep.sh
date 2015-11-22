@@ -146,8 +146,8 @@ for i in {0..300..30}
 do
     d_delay=$i
     echo $d_delay
-    dir=$rootdir/exp1/vary_delay/$d_delay
-    python exp1.py --bw $bw \
+    dir=$rootdir/exp3/vary_delay/$d_delay
+    python exp3.py --bw $bw \
         --dir $dir \
         -t 60 \
 	--de $d_delay \

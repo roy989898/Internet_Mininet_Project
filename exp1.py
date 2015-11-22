@@ -39,6 +39,12 @@ parser.add_argument('--de',
                     type=float,
                     help="The delay value of link",
                     default=0)
+					
+parser.add_argument('-n',
+                    type=int,
+                    help=("Number of senders in the parking lot topo."
+                          "Must be >= 1"),
+                    )
 
 parser.add_argument('--lo',
                     type=float,
@@ -75,7 +81,7 @@ class CreateTopo(Topo):
     # Topology change at here
     "Parking Lot Topology"
 
-    def __init__(self, n=1, cpu=.1, bw=10, delay=None,
+    def __init__(self, cpu=.1, bw=10, delay=None,
                  max_queue_size=None, **params):
         """Parking lot topology with one receiver
            and n clients.

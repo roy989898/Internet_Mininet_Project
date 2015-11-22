@@ -44,6 +44,12 @@ parser.add_argument('--lo',
                     type=float,
                     help="The loss rate of link",
                     default=0)
+					
+parser.add_argument('-n',
+                    type=int,
+                    help=("Number of senders in the parking lot topo."
+                          "Must be >= 1"),
+                    )
 
 parser.add_argument('--dir', '-d',
                     help="Directory to store outputs",
